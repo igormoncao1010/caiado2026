@@ -133,6 +133,21 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .section h2 { font-size: clamp(38px, 5vw, 78px); }
 .rich-copy p, .section-grid > p { margin: 0 0 20px; color: var(--muted); font-size: 18px; line-height: 1.75; }
 .manifest { background: var(--paper); }
+.manifest-video {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 28px;
+  border: 1px solid var(--line);
+  background: #07130f;
+  box-shadow: 0 20px 70px rgba(5,24,16,.14);
+}
+.manifest-video video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #07130f;
+}
 .signal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 60px; background: var(--line); border: 1px solid var(--line); }
 .signal-grid article { background: #fffaf0; padding: 34px; min-height: 240px; }
 .signal-grid span { color: var(--green); font-weight: 900; }
