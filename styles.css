@@ -476,7 +476,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (max-width: 560px) {
-  .hero { margin-top: 0; }
+  .hero { margin-top: 0; aspect-ratio: 1380 / 1765; }
+  .hero-layer img { object-position: center top; }
   .site-nav { top: 10px; width: calc(100% - 20px); }
   .brand img { height: 34px; }
   .section { padding-left: 18px; padding-right: 18px; }
