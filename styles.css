@@ -131,6 +131,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .section { padding: clamp(76px, 10vw, 140px) max(22px, calc((100vw - 1180px) / 2)); }
 .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 88px); align-items: start; }
 .section h2 { font-size: clamp(38px, 5vw, 78px); }
+.manifest .section-grid h2 { font-size: clamp(32px, 4vw, 58px); line-height: 1.02; }
 .rich-copy p, .section-grid > p { margin: 0 0 20px; color: var(--muted); font-size: 18px; line-height: 1.75; }
 .manifest { background: var(--paper); }
 .manifest-video {
@@ -193,6 +194,93 @@ button, a { -webkit-tap-highlight-color: transparent; }
   object-position: center bottom;
 }
 .ticket-media p { margin: 0; max-width: 300px; font-size: 21px; line-height: 1.18; font-weight: 800; }
+.kassab-portrait {
+  position: relative;
+  height: clamp(360px, 34vw, 520px);
+  margin: 0 0 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.18);
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.68));
+}
+.kassab-portrait::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 32%;
+  background: linear-gradient(0deg, rgba(3,57,38,.68), transparent);
+  pointer-events: none;
+}
+.kassab-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.ticket-badge {
+  display: grid;
+  align-content: end;
+  min-height: clamp(300px, 30vw, 460px);
+  padding: clamp(26px, 4vw, 46px);
+  border: 1px solid rgba(255,255,255,.18);
+  background:
+    linear-gradient(180deg, rgba(255,199,44,.14), rgba(7,19,15,.08)),
+    rgba(255,255,255,.08);
+}
+.ticket-badge span {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.ticket-badge strong {
+  margin-top: 12px;
+  color: var(--white);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(54px, 8vw, 104px);
+  line-height: .9;
+}
+.cida-support {
+  background: #ffffff;
+}
+.cida-support-grid {
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) 1fr;
+  gap: clamp(24px, 5vw, 70px);
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.cida-mini-portrait {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, #eef3ed, #dfe9df);
+}
+.cida-mini-portrait img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  object-position: center bottom;
+}
+.cida-support-copy h2 {
+  margin: 0 0 18px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(38px, 5vw, 72px);
+  line-height: .96;
+}
+.cida-support-copy p {
+  max-width: 760px;
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.7;
+}
+.cida-support-tags { margin-top: 24px; }
+.cida-support-tags span {
+  border-color: var(--line);
+  color: var(--green-deep);
+}
 .ticket-copy { padding: clamp(34px, 6vw, 76px); background: rgba(0,0,0,.18); }
 .ticket-copy h2 { font-size: clamp(48px, 8vw, 112px); }
 .ticket-copy p { color: rgba(255,255,255,.78); font-size: 18px; line-height: 1.72; }
@@ -301,6 +389,55 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .news-grid span { color: var(--gold); font-size: 12px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
 .news-grid h3 { margin: 12px 0 0; font-size: 24px; line-height: 1.18; }
 
+.reveal-item {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0);
+  filter: blur(8px);
+  transition:
+    opacity .82s cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms),
+    transform .82s cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms),
+    filter .82s cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+.reveal-left { transform: translate3d(-34px, 0, 0); }
+.reveal-right { transform: translate3d(34px, 0, 0); }
+.reveal-scale { transform: translate3d(0, 28px, 0) scale(.96); }
+.reveal-card { transform: translate3d(0, 30px, 0) scale(.98); }
+.reveal-row { transform: translate3d(22px, 0, 0); }
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+.photo-item.reveal-item img,
+.reveal-item .kassab-portrait img,
+.reveal-item .cida-mini-portrait img {
+  transform: scale(1.06);
+  transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);
+}
+.photo-item.reveal-item.is-visible img,
+.reveal-item.is-visible .kassab-portrait img,
+.reveal-item.is-visible .cida-mini-portrait img {
+  transform: scale(1);
+}
+.reduce-motion .reveal-item,
+.reduce-motion .photo-item img,
+.reduce-motion .kassab-portrait img,
+.reduce-motion .cida-mini-portrait img {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
 .footer { display: flex; justify-content: center; gap: 32px; padding: 46px max(22px, calc((100vw - 1180px) / 2)); background: #07130f; color: rgba(255,255,255,.75); border-top: 1px solid rgba(255,255,255,.1); text-align: center; }
 .footer img { height: 48px; margin: 0 auto 18px; }
 .footer p { max-width: 560px; margin: 0 auto; line-height: 1.6; }
@@ -324,8 +461,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .modal-panel .primary-action { margin-top: 10px; }
 
 @media (max-width: 900px) {
-  .hero { aspect-ratio: 1380 / 1765; }
-  .hero-layer img { object-position: center top; }
+  .hero-layer img { object-position: center center; }
   .nav-toggle { display: block; }
   .nav-links { position: absolute; top: calc(100% + 10px); right: 0; display: none; width: min(320px, calc(100vw - 32px)); padding: 14px; border-radius: 22px; background: rgba(7,19,15,.94); box-shadow: var(--shadow); }
   .site-nav.is-open .nav-links { display: grid; }
@@ -344,10 +480,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .site-nav { top: 10px; width: calc(100% - 20px); }
   .brand img { height: 34px; }
   .section { padding-left: 18px; padding-right: 18px; }
+  .cida-support { padding-bottom: 34px; }
+  .cida-support + .agenda { padding-top: 34px; }
   .signal-grid article, .ticket-media, .ticket-copy { padding: 26px; }
   .ticket-card { min-height: 0; }
   .ticket-media { min-height: 0; }
   .cida-portrait { height: 360px; }
+  .kassab-portrait { height: 360px; }
   .photo-grid { grid-template-columns: 1fr; grid-auto-rows: 240px; }
   .photo-large, .photo-wide { grid-column: span 1; grid-row: span 1; }
   .news-grid img { height: 210px; }
@@ -428,6 +567,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 @media (max-width: 900px) {
   .rare-earths-panel, .mineral-list { grid-template-columns: 1fr; }
+  .cida-support-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .plan-grid { grid-template-columns: 1fr; }

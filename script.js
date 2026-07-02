@@ -140,16 +140,45 @@ audio?.addEventListener('ended', () => {
   setMusicUi(false);
 });
 
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.14 });
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const revealTargets = [
+  ['.section-kicker', 'reveal-rise'],
+  ['.section h2', 'reveal-rise'],
+  ['.rich-copy p', 'reveal-rise'],
+  ['.manifest-video', 'reveal-scale'],
+  ['.signal-grid article', 'reveal-card'],
+  ['.ticket-card', 'reveal-scale'],
+  ['.ticket-media', 'reveal-left'],
+  ['.ticket-copy', 'reveal-right'],
+  ['.cida-support-grid', 'reveal-rise'],
+  ['.cida-support-copy p', 'reveal-rise'],
+  ['.agenda-item', 'reveal-row'],
+  ['.plan-grid article', 'reveal-card'],
+  ['.rare-earths-panel', 'reveal-scale'],
+  ['.mineral-list div', 'reveal-card'],
+  ['.gallery-head', 'reveal-rise'],
+  ['.photo-item', 'reveal-scale'],
+  ['.news-grid article', 'reveal-card'],
+  ['.footer', 'reveal-rise']
+];
 
-document.querySelectorAll('.section, .signal-grid article, .news-grid article').forEach((item) => {
-  item.classList.add('reveal-item');
-  revealObserver.observe(item);
-});
+if (reduceMotion) {
+  document.documentElement.classList.add('reduce-motion');
+} else {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+
+  revealTargets.forEach(([selector, effect]) => {
+    document.querySelectorAll(selector).forEach((item, index) => {
+      item.classList.add('reveal-item', effect);
+      item.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 70}ms`);
+      revealObserver.observe(item);
+    });
+  });
+}
